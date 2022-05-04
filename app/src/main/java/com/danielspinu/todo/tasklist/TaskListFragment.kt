@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
@@ -12,6 +13,8 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import coil.load
+import coil.transform.CircleCropTransformation
 import com.danielspinu.todo.R
 import com.danielspinu.todo.form.FormActivity
 import com.danielspinu.todo.network.Api
@@ -83,6 +86,9 @@ class TaskListFragment: Fragment() {
             val userInfo = Api.userWebService.getInfo().body()!!
 
             view?.findViewById<TextView>(R.id.userInfo)?.text = "${userInfo.firstName} ${userInfo.lastName}"
+            view?.findViewById<ImageView>(R.id.userLogo)?.load("https://goo.gl/gEgYUd") {
+                transformations(CircleCropTransformation())
+            }
         }
         viewModel.refresh()
     }
